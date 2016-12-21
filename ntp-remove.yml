@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: no
+  remote_user: cloudbolt
+  become: true
+  become_method: sudo
+
+  tasks:
+
+  - name: remove ntp
+    apt: name=ntp state=absent

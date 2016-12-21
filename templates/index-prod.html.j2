@@ -1,0 +1,31 @@
+<html>
+<title>CloudBolt Production Demo</title>
+
+<!--
+http://stackoverflow.com/questions/22223270/vertically-and-horizontally-center-a-div-with-css
+http://css-tricks.com/centering-in-the-unknown/
+http://jsfiddle.net/6PaXB/
+-->
+
+<style>.block {text-align: center;margin-bottom:10px;}.block:before {content: '';display: inline-block;height: 100%;vertical-align: middle;margin-right: -0.25em;}.centered {display: inline-block;vertical-align: middle;width: 300px;}</style>
+
+<body>
+<div class="block" style="height: 99%;">
+    <div class="centered">
+        <h1>CloudBolt Production Demo</h1>
+        <p>Served by {{ ansible_hostname }} ({{ ansible_eth0.ipv4.address }}).</p>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    ip_address = "{{ ansible_eth0.ipv4.address }}";
+    octets = ip_address.split('.');
+    last_octet = octets[octets.length-1];
+    places = ("000" + (last_octet).toString(10)).slice(-3).split("").map(function(t){return parseInt(t)+6})
+    hex_strings = places.map(function(t){return t.toString(16)+"0"})
+    color_as_string = "#" + hex_strings.join("");
+    document.body.style.backgroundColor = color_as_string;
+</script>
+
+</html>

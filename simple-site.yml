@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: no
+  remote_user: cloudbolt 
+
+  tasks:
+
+  - name: update apt
+    become: true
+    become_method: sudo
+    apt: update_cache=yes
+
+  - name: install nginx
+    become: true
+    become_method: sudo
+    apt: name=nginx state=installed

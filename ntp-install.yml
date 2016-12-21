@@ -1,0 +1,23 @@
+---
+- hosts: all
+  gather_facts: no
+  remote_user: cloudbolt
+  become: true
+  become_method: sudo
+
+  tasks:
+
+  - name: install ntp
+    apt: name=ntp state=installed update_cache=yes
+
+  - name: write our ntp.conf
+    copy: src=/home/ansible/files/ntp.conf dest=/etc/ntp.conf mode=644 owner=root group=root
+    notify: restart ntp
+
+  - name: start ntp
+    service: name=ntp state=started
+
+  handlers:
+
+  - name: restart ntp
+    service: name=ntp state=restarted
